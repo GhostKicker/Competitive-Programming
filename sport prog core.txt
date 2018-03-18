@@ -1,0 +1,52 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <vector>
+#include <set>
+#include <map>
+#include <queue>
+#include <bitset>
+#include <cmath>
+#include <sstream>
+#include <string>
+#include <algorithm>
+#include <tuple>
+#define endl "\n"
+#define fs first
+#define sd second
+#define mp make_pair
+#define mt make_tuple
+#define pb push_back
+#define deb(x) for(auto mew : (x))cout<<mew<<" ";cout<<endl;
+#define debs(x) cout<<(x).size()<<": ";for(auto mew : (x))cout<<mew<<" ";cout<<endl;
+#define cin_ ios_base::sync_with_stdio(0);cin.tie(0);
+#define all(x) (x).begin(), (x).end()
+using namespace std;
+typedef unsigned long long ull;
+typedef long long ll;
+typedef double db;
+typedef long double ldb;
+typedef tuple<int, int, int> t3;
+typedef vector<string> vstr;
+typedef pair<int, int> pii;
+typedef pair<ll, int> pli;
+typedef pair<int, ll> pil;
+typedef pair<ll, ll> pll;
+typedef vector<int> vi;
+typedef vector<vi> vvi;
+typedef vector<ll> vl;
+typedef vector<pii> vpii;
+typedef vector<db> vdb;
+int inf = 1e9 + 7;
+int gcd(int a, int b) { return b ? gcd(b, a % b) : a; }
+
+int main() {
+    cin_;
+	
+#ifdef _DEBUG
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+
+
+    return 0;
+}

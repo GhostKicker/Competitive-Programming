@@ -1,0 +1,481 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <vector>
+#include <set>
+#include <map>
+#include <queue>
+#include <bitset>
+#include <cmath>
+#include <sstream>
+#include <iomanip>
+#include <string>
+#include <algorithm>
+#include <tuple>
+#define endl "\n"
+#define fs first
+#define sd second
+#define mp make_pair
+#define mt make_tuple
+#define pb push_back
+#define deb(x) for(auto mew : (x))cout<<mew<<" ";cout<<endl;
+#define debs(x) cout<<(x).size()<<": ";for(auto mew : (x))cout<<mew<<" ";cout<<endl;
+#define cin_ ios_base::sync_with_stdio(0);cin.tie(0);
+#define all(x) (x).begin(), (x).end()
+using namespace std;
+typedef long long ll;
+typedef double db;
+typedef long double ldb;
+typedef tuple<int, int, int> t3;
+typedef vector<string> vstr;
+typedef pair<int, int> pii;
+typedef pair<ll, int> pli;
+typedef pair<int, ll> pil;
+typedef pair<ll, ll> pll;
+typedef vector<int> vi;
+typedef vector<vi> vvi;
+typedef vector<ll> vl;
+typedef vector<pii> vpii;
+typedef vector<vpii> vvpii;
+typedef vector<db> vdb;
+int inf = 1e9 + 7;
+db eps = 1e-8;
+int gcd(int a, int b) { return b ? gcd(b, a % b) : a; }
+db pi = acos(0.0) * 2;
+
+
+struct pt
+{
+    db x = 0;
+    db y = 0;
+    pt() {}
+
+    pt(db x, db y)
+        :x(x)
+        , y(y)
+    {}
+
+    pt operator-() { return pt(0, 0) - *this; }
+    pt operator+(pt b) { return pt(x + b.x, y + b.y); }
+    pt operator-(pt b) { return pt(x - b.x, y - b.y); }
+    pt operator*(db a) { return pt(x*a, y*a); }
+    pt operator/(db a) { return pt(x / a, y / a); }
+    pt& operator+=(pt b) { *this = *this + b; return *this; }
+    pt& operator-=(pt b) { *this = *this - b; return *this; }
+    pt& operator*=(db a) { *this = *this * a; return *this; }
+    pt& operator/=(db a) { *this = *this / a; return *this; }
+};
+struct pt3d
+{
+    db x = 0;
+    db y = 0;
+    db z = 0;
+    pt3d() {}
+
+    pt3d(db x, db y, db z)
+        :x(x)
+        , y(y)
+        , z(z)
+    {}
+
+    pt3d operator-() { return pt3d(0, 0, 0) - *this; }
+    pt3d operator+(pt3d b) { return pt3d(x + b.x, y + b.y, z + b.z); }
+    pt3d operator-(pt3d b) { return pt3d(x - b.x, y - b.y, z - b.z); }
+    pt3d operator*(db a) { return pt3d(x*a, y*a, z*a); }
+    pt3d operator/(db a) { return pt3d(x / a, y / a, z / a); }
+    pt3d& operator+=(pt3d b) { *this = *this + b; return *this; }
+    pt3d& operator-=(pt3d b) { *this = *this - b; return *this; }
+    pt3d& operator*=(db a) { *this = *this * a; return *this; }
+    pt3d& operator/=(db a) { *this = *this / a; return *this; }
+};
+
+typedef pair<pt, pt> seg;
+
+struct line
+{
+    //ax + by + c = 0;
+    db a = 0;
+    db b = 0;
+    db c = 0;
+
+    line() {}
+
+    line(db a, db b, db c)
+        : a(a)
+        , b(b)
+        , c(c)
+    {}
+
+    db inp(pt p) { return a*p.x + b*p.y + c; }
+
+    line(pt p1, pt p2)
+    {
+        a = p2.y - p1.y;
+        b = p1.x - p2.x;
+        c = -(a*p1.x + b*p1.y);
+    }
+};
+
+istream& operator>>(istream& istrm, pt& p)
+{
+    istrm >> p.x >> p.y;
+    return istrm;
+}
+
+istream& operator>>(istream& istrm, line& l)
+{
+    istrm >> l.a >> l.b >> l.c;
+    return istrm;
+}
+
+ostream& operator<<(ostream& ostrm, pt p)
+{
+    ostrm << p.x << " " << p.y;
+    return ostrm;
+}
+
+ostream& operator<<(ostream& ostrm, line l)
+{
+    ostrm << l.a << " " << l.b << " " << l.c;
+    return ostrm;
+}
+
+struct circle
+{
+    pt c;
+    db r;
+
+};
+
+db vlen2(pt a, pt b = pt(0, 0))
+{
+    db x = a.x - b.x;
+    db y = a.y - b.y;
+    return x*x + y*y;
+}
+db vlen23d(pt3d a, pt3d b = pt3d(0, 0, 0))
+{
+    db x = a.x - b.x;
+    db y = a.y - b.y;
+    db z = a.z - b.z;
+    return x*x + y*y + z*z;
+}
+pt rotate(pt p, db a)
+{
+    pt b;
+    b.x = p.x * cos(a) - p.y * sin(a);
+    b.y = p.x * sin(a) + p.y * cos(a);
+    return b;
+}
+
+int sign(db a)
+{
+    if (fabs(a) < eps) return 0;
+    return (a < 0 ? -1 : 1);
+
+}
+
+db dot(pt a, pt b) { return a.x*b.x + a.y*b.y; }
+
+db dot3d(pt3d a, pt3d b) { return a.x*b.x + a.y*b.y + a.z*b.z; }
+
+db cross(pt a, pt b) { return a.x*b.y - b.x*a.y; }
+
+db polarangle(pt p)
+{
+    db res = atan2(p.y, p.x);
+    if (res < 0)
+        res += 2 * pi;
+    return res;
+}
+
+
+db vectorangle(pt a, pt b)
+{
+    db res = atan2(cross(a, b), dot(a, b));
+    res = fabs(res);
+    return res;
+}
+
+db vectorangle3d(pt3d a, pt3d b)
+{
+    db d = dot3d(a, b);
+    db l1 = sqrt(vlen23d(a));
+    db l2 = sqrt(vlen23d(b));
+    return fabs(acos(d / l1 / l2));
+}
+
+db striangle(pt& a, pt& b, pt& c)
+{
+    pt v1 = b - a;
+    pt v2 = c - a;
+    db res = cross(v1, v2) / 2;
+    return res;
+}
+
+db smultiangle(vector<pt>& m)
+{
+    db res = 0;
+    for (int i = 1; i < m.size() - 1; i++)
+        res += striangle(m[0], m[i], m[i + 1]);
+    return fabs(res);
+}
+
+
+db dist_pt_line(pt p, line l)
+{
+    db num = fabs(l.a*p.x + l.b*p.y + l.c);
+    db denum = sqrt(vlen2(pt(l.a, l.b)));
+    return num / denum;
+}
+
+db dist_pt_line(pt p, pt l1, pt l2)
+{
+    db num = fabs(cross(l1 - p, l2 - p));
+    db denum = sqrt(vlen2(l1 - p, l2 - p));
+    return num / denum;
+}
+
+db dist_pt_ray(pt p, pt st, pt end)
+{
+    if (dot(p - st, end - st) > eps)
+    {
+        db num = fabs(cross(st - p, end - p));
+        db denum = sqrt(vlen2(st - p, end - p));
+        return num / denum;
+    }
+    else
+    {
+        return sqrt(vlen2(st, p));
+    }
+}
+
+db dist_pt_segment(pt p, pt l1, pt l2)
+{
+    if (!(dot(p - l1, l2 - l1) > eps))
+    {
+        return sqrt(vlen2(l1, p));
+    }
+    if (!(dot(p - l2, l1 - l2) > eps))
+    {
+        return sqrt(vlen2(l2, p));
+    }
+
+    db num = fabs(cross(l1 - p, l2 - p));
+    db denum = sqrt(vlen2(l1 - p, l2 - p));
+    return num / denum;
+}
+
+pt normal_vector(pt p)
+{
+    pt res = p;
+    res.x /= sqrt(vlen2(p));
+    res.y /= sqrt(vlen2(p));
+    return res;
+}
+
+line line_from_point_and_normal(pt p, pt l)
+{
+    line res;
+    res.a = l.x;
+    res.b = l.y;
+    res.c = -(res.a*p.x + res.b*p.y);
+    return res;
+}
+
+bool point_is_on_line(pt p, line l)
+{
+    return fabs(l.a * p.x + l.b * p.y + l.c) < eps;
+}
+
+bool point_is_on_ray(pt p, pt st, pt end)
+{
+    if (fabs(cross(p - st, p - end)) > eps) return false;
+    db n = dot(end - st, p - st);
+    if (sign(dot(end - st, p - st)) == -1) return false;
+    return true;
+
+}
+
+bool pt_is_on_circle(circle c, pt p)
+{
+    return abs(vlen2(c.c - p) - c.r*c.r) < eps;
+}
+
+bool point_is_on_segment(pt p, pt l1, pt l2)
+{
+    if (fabs(cross(p - l1, p - l2)) > eps) return false;
+    db n = dot(l2 - l1, p - l1);
+    if (sign(dot(l2 - l1, p - l1)) == -1) return false;
+    if (sign(dot(l1 - l2, p - l2)) == -1) return false;
+    return true;
+
+}
+
+pt vector_of_length(pt v, db le)
+{
+    v = normal_vector(v);
+    v.x *= le;
+    v.y *= le;
+    return v;
+}
+
+
+line bisector_line(pt p1, pt p2, pt p3)
+{
+    pt v1 = p1 - p2;
+    pt v2 = p3 - p2;
+    v1 = normal_vector(v1);
+    v2 = normal_vector(v2);
+    return line(p2, p2 + v1 + v2);
+}
+
+bool on_one_side(line l, pt p1, pt p2)
+{
+    return sign(l.inp(p1)) == sign(l.inp(p2));
+}
+
+pt cross_point(line l1, line l2)
+{
+    if (abs(l1.a) > eps) swap(l1, l2);
+    db y = -(l1.c - l2.c*l1.a / l2.a) / (l1.b - l2.b*l1.a / l2.a);
+    if (abs(l2.b) > eps) swap(l1, l2);
+    db x = -(l2.c - l1.c*l2.b / l1.b) / (l2.a - l1.a*l2.b / l1.b);
+    return pt(x, y);
+}
+
+seg bounding_rectangle(seg s)
+{
+    seg res;
+    res.fs.x = min(s.fs.x, s.sd.x);
+    res.fs.y = min(s.fs.y, s.sd.y);
+    res.sd.x = max(s.fs.x, s.sd.x);
+    res.sd.y = max(s.fs.y, s.sd.y);
+    return res;
+}
+
+
+bool segment_interseption(seg s1, seg s2)
+{
+    seg br1 = bounding_rectangle(s1);
+    seg br2 = bounding_rectangle(s2);
+    if ((br1.sd.x - br2.fs.x) > -eps &&
+        (br2.sd.x - br1.fs.x) > -eps &&
+        (br1.sd.y - br2.fs.y) > -eps &&
+        (br2.sd.y - br1.fs.y) > -eps)
+    {
+        if (sign(cross(s2.fs - s1.fs, s1.sd - s1.fs))*sign(cross(s2.sd - s1.fs, s1.sd - s1.fs)) < 1)
+            if (sign(cross(s1.fs - s2.fs, s2.sd - s2.fs))*sign(cross(s1.sd - s2.fs, s2.sd - s2.fs)) < 1)
+                return true;
+    }
+    return false;
+}
+
+db dist_segments(seg l1, seg l2)
+{
+    if (segment_interseption(l1, l2)) return 0;
+    db r1 = (dist_pt_segment(l1.fs, l2.fs, l2.sd));
+    db r2 = (dist_pt_segment(l1.sd, l2.fs, l2.sd));
+    db r3 = (dist_pt_segment(l2.fs, l1.fs, l1.sd));
+    db r4 = (dist_pt_segment(l2.sd, l1.fs, l1.sd));
+    return min({ r1, r2, r3, r4 });
+}
+
+pair<pt, pt> two_points_on_line(line l)
+{
+    if (sign(l.c) == 0)
+        return mp(pt(0, 0), pt(l.b, -l.a));
+
+    db y = -l.c / l.b;
+    db x = -l.c / l.a;
+    if (sign(l.a) == 0)
+        return mp(pt(0, y), pt(1, y));
+
+    if (sign(l.b) == 0)
+        return mp(pt(x, 0), pt(x, 1));
+
+    return mp(pt(0, y), pt(x, 0));
+}
+
+pair<line, line> two_parellel_lines_on_dist(line l, db r)
+{
+    db c1 = r*sqrt(vlen2(pt(l.a, l.b))) + l.c;
+    db c2 = -r*sqrt(vlen2(pt(l.a, l.b))) + l.c;
+    return mp(line(l.a, l.b, c1), line(l.a, l.b, c2));
+}
+
+pair<pt, pt> points_of_touching(circle c, pt p)
+{
+    pair<pt, pt> res;
+    pt AC = c.c - p;
+    db AC_len = sqrt(vlen2(AC));
+    db alpha = asin(c.r / AC_len);
+    db AK_len = AC_len * cos(alpha);
+    pt v_tan = vector_of_length(AC, AK_len);
+    res.fs = p + rotate(v_tan, alpha);
+    res.sd = p + rotate(v_tan, -alpha);
+    return res;
+}
+
+pt3d coords_by_two_angles(db r, db a, db b)
+{
+    pt3d res;
+    res.x = r*cos(a)*cos(b);
+    res.y = r*sin(a)*cos(b);
+    res.z = r*sin(b);
+    return res;
+}
+
+int line_and_circle_points(line l, circle c)
+{
+    if (abs(dist_pt_line(c.c, l) - c.r) < eps) return 1;
+    if (dist_pt_line(c.c, l) < c.r) return 2;
+    return 0;
+}
+
+pii circles_num_of_inter_points(circle c1, circle c2)
+{
+
+    db le = vlen2(c1.c, c2.c);
+    db rm = (c1.r - c2.r)*(c1.r - c2.r);
+    db rp = (c1.r + c2.r)*(c1.r + c2.r);
+
+    if (le < eps && rm < eps)
+    {
+        return mp(3,0);
+    }
+
+    if (le < c1.r*c1.r || le < c2.r*c2.r)
+    {
+        // inside
+
+        if (abs(rm - le) < eps)
+            return mp(1,-1);
+
+        if (rm > le)
+            return mp(0,-1);
+
+        return mp(2,-1);
+    }
+    else
+    {
+        //outside
+        if ((le - rp) < 0)
+            return mp(2,1);
+        if (abs(le - rp) < eps)
+            return mp(1,1);
+
+        return mp(0,1);
+    }
+}
+
+int main() {
+    cin_;
+    cout << fixed << setprecision(10);
+#ifdef _DEBUG
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+
+
+    return 0;
+}

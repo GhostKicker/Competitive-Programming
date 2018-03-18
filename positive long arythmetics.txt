@@ -1,0 +1,104 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+string summ(string lhs, string rhs) {
+    string res = "";
+
+    //дописываем у минимального числа нули спереди, пока длины строк не равны 
+    while (lhs.size() != rhs.size()) {
+        (lhs.size() < rhs.size() ? lhs : rhs) = '0' + (lhs.size() < rhs.size() ? lhs : rhs);
+    }
+
+    int length = lhs.size();
+
+    //сейчас строки лежат примерно в таком виде
+    //203
+    //002
+    //теперь их нужно просто сложить столбиком
+    int tmp = 0; //это число обозначает единички над столбиком, оно = 1, если в предыдущем сложении получилось > 9
+    for (int i = length - 1; i >= 0; i--) //цикл от последнего элемента до первого
+    {
+        int num1 = lhs[i] - '0';
+        int num2 = rhs[i] - '0';
+        int sum = num1 + num2 + tmp;
+        tmp = 0;
+        if (sum > 9) {
+            tmp += 1;
+            sum -= 10;
+        }
+        res = char(sum + '0') + res;
+    }
+    if (tmp > 0) res = char(tmp + '0') + res; //если что-то осталось
+    return res;
+}
+
+string simple_mult(string lhs, char mult_char) { //функция для перемножение числа на однозначное число
+    int mult = mult_char - '0';
+    int tmp = 0; // это число обозначает число над столбиком, оно > 0 при произведении > 9
+    string res = "";
+    int length = lhs.size();
+    for (int i = length-1; i >= 0; i--)
+    {
+        int num = (lhs[i] - '0');
+        int tmpsumm = num * mult + tmp;
+        tmp = tmpsumm / 10;
+        tmpsumm = tmpsumm % 10;
+        res = char(tmpsumm + '0') + res;
+    }
+    if (tmp > 0) {
+        res = char(tmp + '0') + res; // если что-то осталось
+    }
+    return res;
+}
+
+string mult(string lhs, string rhs) {
+    string res = "0";
+    int sizel = lhs.size();
+    int sizer = rhs.size();
+    string tens = ""; 
+    // tens обозначает сдвиг чисел при подсчете столбиком
+    //    25
+    //   111
+    //-------
+    //    25
+    //   250 <- этот сдвиг
+    //  2500 <- и этот сдвиг
+    //-------
+    //  2775
+    for (int i = sizer - 1; i >= 0; i--) 
+    {
+        res = summ(res, (simple_mult(lhs, rhs[i]) + tens));
+        tens += '0';
+        // в этом цикле мы перемножаем lhs и однозначное число, дописываем кол-во нулей, соответствующее сдвигу
+        // а затем прибавляем то, что получилось, к res
+    }
+    while ((res.size() > 1) && (res[0] == '0')) { res = res.substr(1); } //если есть ведущие нули, вырезаем их
+    return res;
+}
+
+
+int main() {
+    string a1;
+    string a2;
+    int WasFalse = 0;
+    
+    for (int i = 0; i < 100; i++)
+    {
+        for (int j = 0; j < 100; j++)
+        {
+            if (to_string(i * j) == mult(to_string(i), to_string(j))) {
+            }
+            else {
+                cout << to_string(i) << " " << to_string(j) << " " << i*j << " " << mult(to_string(i), to_string(j)) << endl;
+                //cout << "WRONG" << endl;
+                WasFalse += 1;
+            }
+        }
+    }
+    
+    cout << "I was wrong " << WasFalse << " times";
+    int qweqweqwe;
+    cin >> qweqweqwe;
+    return 0;
+}
