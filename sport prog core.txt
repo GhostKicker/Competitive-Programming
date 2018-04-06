@@ -16,8 +16,8 @@
 #define mp make_pair
 #define mt make_tuple
 #define pb push_back
-#define deb(x) for(auto mew : (x))cout<<mew<<" ";cout<<endl;
-#define debs(x) cout<<(x).size()<<": ";for(auto mew : (x))cout<<mew<<" ";cout<<endl;
+#define deb(x) {for(auto mew : (x))cout<<mew<<" ";cout<<endl;}
+#define debs(x) {cout<<(x).size()<<": ";for(auto mew : (x))cout<<mew<<" ";cout<<endl;}
 #define cin_ ios_base::sync_with_stdio(0);cin.tie(0);
 #define all(x) (x).begin(), (x).end()
 using namespace std;
@@ -28,16 +28,17 @@ typedef long double ldb;
 typedef tuple<int, int, int> t3;
 typedef vector<string> vstr;
 typedef pair<int, int> pii;
-typedef pair<ll, int> pli;
-typedef pair<int, ll> pil;
 typedef pair<ll, ll> pll;
 typedef vector<int> vi;
 typedef vector<vi> vvi;
 typedef vector<ll> vl;
 typedef vector<pii> vpii;
+typedef vector<vpii> vvpii;
 typedef vector<db> vdb;
 int inf = 1e9 + 7;
 int gcd(int a, int b) { return b ? gcd(b, a % b) : a; }
+template<class T> inline void amin(T &x, const T &y) { if (y<x) x=y; }
+template<class T> inline void amax(T &x, const T &y) { if (x<y) x=y; }
 
 int main() {
     cin_;
