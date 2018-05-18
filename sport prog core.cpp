@@ -11,15 +11,14 @@
 #include <string>
 #include <algorithm>
 #include <tuple>
-#define endl "\n"
 #define fs first
 #define sd second
 #define mp make_pair
 #define mt make_tuple
 #define pb push_back
+#define fc(a,b) for (int a = 0; a < b; ++a) 
 #define deb(x) {for(auto mew : (x))cout<<mew<<" ";cout<<endl;}
 #define debs(x) {cout<<(x).size()<<": ";for(auto mew : (x))cout<<mew<<" ";cout<<endl;}
-#define cin_ ios_base::sync_with_stdio(0);cin.tie(0);
 #define all(x) (x).begin(), (x).end()
 using namespace std;
 typedef unsigned long long ull;
@@ -36,13 +35,15 @@ typedef vector<ll> vl;
 typedef vector<pii> vpii;
 typedef vector<vpii> vvpii;
 typedef vector<db> vdb;
-int inf = 1e9 + 7;
+ll INF = static_cast<ll>(2e18);
+int inf = static_cast<int>(1e9 + 7);
 int gcd(int a, int b) { return b ? gcd(b, a % b) : a; }
 template<class T> inline void amin(T &x, const T &y) { if (y<x) x=y; }
 template<class T> inline void amax(T &x, const T &y) { if (x<y) x=y; }
 
 int main() {
-    cin_;
+    ios_base::sync_with_stdio(0); 
+    cin.tie(0);
 	
 #ifdef _DEBUG
     freopen("input.txt", "r", stdin);
