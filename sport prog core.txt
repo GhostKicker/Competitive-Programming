@@ -1,0 +1,92 @@
+//#pragma comment(linker, "/STACK:256000000")
+//#pragma gcc optimize(O3)
+#define _CRT_SECURE_NO_WARNINGS
+#include <fstream>
+#include <random>
+#include <chrono>
+#include <iostream>
+#include <vector>
+#include <set>
+#include <map>
+#include <queue>
+#include <bitset>
+#include <cmath>
+#include <iomanip>
+#include <sstream>
+#include <string>
+#include <algorithm>
+#include <tuple>
+#define rr resize
+#define ass assign
+#define fs first
+#define sd second
+#define sz size()
+#define mp make_pair
+#define mt make_tuple
+#define pb push_back
+#define all(x) (x).begin(), (x).end()
+#define rall(x) (x).rbegin(), (x).rend() 
+using namespace std;
+typedef double db;
+typedef long long ll;
+typedef unsigned long long ull;
+typedef tuple<int, int, int> t3;
+typedef vector<string> vstr;
+typedef vector<char> vch;
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+typedef vector<int> vi;
+typedef vector<vi> vvi;
+typedef vector<ll> vl;
+typedef vector<vl> vvl;
+typedef vector<pii> vpii;
+typedef vector<vpii> vvpii;
+typedef vector<db> vdb;
+typedef vector<bool> meme;
+const db eps = 1e-9;
+const db pi = acos(0.0) * 2;
+const db dinf = 1e250;
+const ll INF = static_cast<ll>(2e18);
+const int inf = static_cast<int>(1e9 + 7);
+ll gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
+template<class T> void OUT(T a) { cout << a; exit(0); }
+mt19937 rng(static_cast<uint32_t>(chrono::steady_clock::now().time_since_epoch().count()));
+chrono::time_point<chrono::steady_clock> cl;
+db time_since_start() { return (chrono::steady_clock::now() - cl).count() / 1e9; }
+void get_time();
+
+
+
+
+int32_t main()
+{
+    ios_base::sync_with_stdio(0);
+    cout << fixed << setprecision(10);
+    cl = chrono::steady_clock::now();
+    cin.tie(0);
+
+
+#ifdef _MY_DEFINE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+
+
+
+
+
+
+
+
+
+
+
+    return 0;
+}
+
+void get_time()
+{
+#ifdef _MY_DEFINE
+    cout << "time: " << time_since_start() << endl;
+#endif
+}
