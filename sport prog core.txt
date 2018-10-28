@@ -1,11 +1,12 @@
-//#pragma comment(linker, "/STACK:256000000")
-//#pragma gcc optimize(O3)
+#pragma comment(linker, "/STACK:256000000")
+#pragma gcc optimize(O3)
 #define _CRT_SECURE_NO_WARNINGS
 #include <fstream>
 #include <random>
 #include <chrono>
 #include <iostream>
 #include <vector>
+#include <stack>
 #include <set>
 #include <map>
 #include <queue>
@@ -48,6 +49,8 @@ const ll INF = static_cast<ll>(2e18);
 const int inf = static_cast<int>(1e9 + 7);
 ll gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 template<class T> void OUT(T a) { cout << a; exit(0); }
+template <typename T> void amax(T& a, T b) { a = max(a, b); }
+template <typename T> void amin(T& a, T b) { a = min(a, b); }
 mt19937 rng(static_cast<uint32_t>(chrono::steady_clock::now().time_since_epoch().count()));
 chrono::time_point<chrono::steady_clock> cl;
 db time_since_start() { return (chrono::steady_clock::now() - cl).count() / 1e9; }
@@ -67,6 +70,10 @@ int32_t main()
 #ifdef _MY_DEFINE
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
+#endif
+#ifndef _MY_DEFINE
+    //freopen("input.txt", "r", stdin);
+    //freopen("output.txt", "w", stdout);
 #endif
 
 
