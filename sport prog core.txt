@@ -41,16 +41,15 @@ typedef vector<vl> vvl;
 typedef vector<pii> vpii;
 typedef vector<vpii> vvpii;
 typedef vector<db> vdb;
-typedef vector<bool> meme;
 const db eps = 1e-9;
-const db pi = acos(0.0) * 2;
+const db pi = acos(-1.0);
 const db dinf = 1e250;
 const ll INF = static_cast<ll>(2e18);
 const int inf = static_cast<int>(1e9 + 7);
 ll gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 template<class T> void OUT(T a) { cout << a; exit(0); }
-template <typename T> void amax(T& a, T b) { a = max(a, b); }
-template <typename T> void amin(T& a, T b) { a = min(a, b); }
+template <typename T> bool amax(T& a, T b) { if (b > a) { a = b; return true; } return false; }
+template <typename T> bool amin(T& a, T b) { if (b < a) { a = b; return true; } return false; }
 mt19937 rng(static_cast<uint32_t>(chrono::steady_clock::now().time_since_epoch().count()));
 chrono::time_point<chrono::steady_clock> cl;
 db time_since_start() { return (chrono::steady_clock::now() - cl).count() / 1e9; }

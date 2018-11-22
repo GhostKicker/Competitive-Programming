@@ -1,0 +1,30 @@
+struct dsu
+{
+    vi p;
+    vi s;
+    dsu() {}
+    dsu(int n) 
+    {
+        p.rr(n);
+        s.assign(n, 1);
+        for (int i = 0; i < p.sz; ++i) p[i] = i;
+    }
+
+    int root(int v)
+    {
+        if (p[v] != v) 
+            p[v] = root(p[v]);
+        return p[v];
+    }
+
+    void unite(int a, int b)
+    {
+        a = root(a);
+        b = root(b);
+        if (a == b) return;
+        if (s[b] > s[a]) swap(a, b);
+        p[b] = a;
+        s[a] += s[b];
+    }
+
+};
