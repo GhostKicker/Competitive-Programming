@@ -3,7 +3,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <bits/stdc++.h>
 #define rr resize
-#define ass assign
 #define fs first
 #define sd second
 #define sz size()
@@ -14,15 +13,9 @@
 using namespace std;
 typedef double db;
 typedef long long ll;
-typedef unsigned long long ull;
-typedef vector<db> vdb;
-typedef vector<char> vch;
-typedef vector<string> vstr;
 typedef vector<int> vi;
 typedef vector<vi> vvi;
-typedef pair<int, int> pii;
-typedef vector<pii> vpii;
-typedef vector<vpii> vvpii;
+typedef vector<db> vdb;
 const db eps = 1e-9;
 const db pi = acos(-1.0);
 const db dinf = 1e250;
@@ -35,8 +28,6 @@ template <typename T> inline bool amin(T& a, T b) { if (b < a) { a = b; return t
 mt19937 rng(static_cast<uint32_t>(chrono::steady_clock::now().time_since_epoch().count()));
 chrono::time_point<chrono::steady_clock> cl;
 db current_time() { return (chrono::steady_clock::now() - cl).count() / 1e9; }
-
-
 
 
 int32_t main()
