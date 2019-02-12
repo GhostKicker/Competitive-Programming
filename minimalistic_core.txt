@@ -1,0 +1,28 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <bits/stdc++.h>
+#define fs first
+#define sd second
+#define sz size()
+#define rr resize
+#define pb push_back
+using namespace std;
+typedef long long ll;
+typedef vector<int> vi;
+template <class T> void OUT(T res) { cout << res; exit(0); }
+const ll inf = 1000*1000*1000 + 7;
+const ll mod = 998244353;
+
+int32_t main()
+{
+    cout << fixed << setprecision(10);
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+	
+#ifdef _MY_DEFINE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+
+
+
+}

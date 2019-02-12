@@ -29,7 +29,7 @@ vi d;
 
 bool bfs(int s)
 {
-    d.assign(n, inf);
+    d.assign(g.sz, inf);
     d[s] = 0;
     queue<int> q;
     q.push(s);
@@ -61,12 +61,12 @@ int dfs(int v, int flow)
 
         if (d[v] == d[E[e].to] - 1 && E[e].flow < E[e].cap)
         {
-            int f1 = dfs(E[e].to, min(flow, E[e].cap - E[e].flow));
-            if (f1 != 0)
+            int fnew = dfs(E[e].to, min(flow, E[e].cap - E[e].flow));
+            if (fnew != 0)
             {
-                E[e].flow += f1;
-                E[e ^ 1].flow -= f1;
-                return f1;
+                E[e].flow += fnew;
+                E[e ^ 1].flow -= fnew;
+                return fnew;
             }
         }
     }
@@ -75,7 +75,6 @@ int dfs(int v, int flow)
 
 int Dinic()
 {
-	vert = g.sz;
     int res = 0;
     while (1)
     {
@@ -83,7 +82,7 @@ int Dinic()
 
         while (1)
         {
-            used.assign(n, 0);
+            used.assign(g.sz, 0);
             int f = dfs(s, inf);
             res += f;
             if (!f) break;
