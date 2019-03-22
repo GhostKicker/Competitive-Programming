@@ -1,8 +1,8 @@
-namespace LCA
+struct LCA
 {
     vi dep;
     vvi p;
-    void dfs(int v, int par, int curd)
+    void dfs(int v, int par, int curd, vvi& g)
     {
         dep[v] = curd;
         p[v][0] = par;
@@ -15,14 +15,14 @@ namespace LCA
         for (auto& it : g[v])
         {
             if (it == par) continue;
-            dfs(it, v, curd + 1);
+            dfs(it, v, curd + 1, g);
         }
     }
-    void init(vvi g)
+    void init(vvi& g)
     {
         dep.rr(g.sz, -1);
         p.rr(g.sz, vi(20, -1));
-        dfs(0, 0, 0);
+        dfs(0, 0, 0, g);
     }
 
     int parent(int v, int h)
@@ -51,4 +51,6 @@ namespace LCA
         }
         return p[a][0];
     }
-}
+    LCA() {}
+    LCA(vvi& g) { init(g); }
+};

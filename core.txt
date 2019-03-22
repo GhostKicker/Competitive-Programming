@@ -8,15 +8,13 @@
 #define sz size()
 #define mp make_pair
 #define pb push_back
-#define all(x) (x).begin(), (x).end()
-#define rall(x) (x).rbegin(), (x).rend() 
+#define all(x) begin(x), end(x)
+#define OUT(x) exit(((cout << (x)), 0))
 //#define int ll
 using namespace std;
 typedef double db;
 typedef long long ll;
 typedef vector<int> vi;
-typedef vector<vi> vvi;
-typedef vector<db> vdb;
 typedef pair<int,int> pii;
 typedef vector<pii> vpii;
 const db eps = 1e-9;
@@ -24,21 +22,13 @@ const db pi = acos(-1.0);
 const db dinf = 1e250;
 const ll INF = (ll)(2e18);
 const int inf = (int)(1e9 + 7);
-const int mod = 998244353;
 inline ll gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
-template<class T> void OUT(T a) { cout << a; exit(0); }
-template <class T1, class T2> inline T1& maxeq(T1& a, T2 b) { return a = max(a, T1(b)); }
-template <class T1, class T2> inline T1& mineq(T1& a, T2 b) { return a = min(a, T1(b)); }
-mt19937 rng((uint32_t)(chrono::steady_clock::now().time_since_epoch().count()));
-chrono::time_point<chrono::steady_clock> cl;
-db current_time() { return (chrono::steady_clock::now() - cl).count() / 1e9; }
 
 
 int32_t main()
 {
     ios_base::sync_with_stdio(0);
     cout << fixed << setprecision(10);
-    cl = chrono::steady_clock::now();
     cin.tie(0);
 
 

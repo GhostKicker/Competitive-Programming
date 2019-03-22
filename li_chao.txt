@@ -1,0 +1,100 @@
+//#pragma comment(linker, "/stack:200000000")
+//#pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,tune=native")
+#pragma GCC optimize("Ofast")
+#include <bits/stdc++.h>
+#define rr resize
+#define fs first
+#define sd second
+#define sz size()
+#define mp make_pair
+#define pb push_back
+#define all(x) (xx).begin(), (xx).end()
+#define int ll
+using namespace std;
+typedef double db;
+typedef long long ll;
+typedef vector<int> vi;
+typedef vector<vi> vvi;
+typedef vector<db> vdb;
+typedef pair<int, int> pii;
+typedef vector<pii> vpii;
+const db eps = 1e-9;
+const db pi = acos(-1.0);
+const db dinf = 1e250;
+const ll INF = (ll)(2e18);
+const int inf = (int)(1e9 + 7);
+const int mod = 998244353;
+inline ll gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
+template <class T> void OUT(T a) { cout << a; exit(0); }
+template <class T1, class T2> inline T1& maxeq(T1& a, T2 b) { return a = max(a, T1(b)); }
+template <class T1, class T2> inline T1& mineq(T1& a, T2 b) { return a = min(a, T1(b)); }
+
+const int maxn = 4e5;
+vi xx;
+
+struct line
+{
+    int k, b;
+    line(int k = 0, int b = INF) :k(k), b(b) {}
+    int operator[](int a) { return a*k + b; }
+}; 
+struct li_chao
+{
+    vector<line> tr;
+    int n = 1;
+    li_chao() { tr.rr(4 * maxn); }
+    void insert(line nl, int v = 1, int l = 0, int r = maxn)
+    {
+        int m = (l + r) >> 1;
+        bool lef = nl[xx[l]] < tr[v][xx[l]];
+        bool mid = nl[xx[m]] < tr[v][xx[m]];
+        if (mid) swap(nl, tr[v]);
+        if (r - l == 1) return;
+        if (lef != mid) insert(nl, v << 1, l, m);
+        else insert(nl, v << 1 | 1, m, r);
+
+    }
+    int get(int x, int v = 1, int l = 0, int r = maxn)
+    {
+        int m = (l + r) >> 1;
+        if (r - l == 1) return tr[v][xx[x]];
+        if (x < m) return min(tr[v][xx[x]], get(x, v << 1, l, m));
+        else return min(tr[v][xx[x]], get(x, v << 1 | 1, m, r));
+    }
+};
+
+
+
+int32_t main()
+{
+    ios_base::sync_with_stdio(0);
+    cout << fixed << setprecision(10);
+    cin.tie(0);
+
+
+#ifdef _MY_DEFINE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+
+    int n;
+    cin >> n;
+
+    if (n == 1) OUT(0);
+
+    vi a(n), b(n);
+    for (auto& it : a) cin >> it;
+    for (auto& it : b) cin >> it;
+    for (auto& it : a) xx.pb(it);
+    while (xx.sz <= maxn) xx.pb(inf);
+
+    sort(all(a));
+    for (auto& it : a) it = lower_bound(all(xx), it) - begin(xx);
+
+    li_chao t;
+    t.insert(line(b[0], 0));
+    for (int i = 1; i < n - 1; ++i) t.insert(line(b[i], t.get(a[i])));
+    cout << t.get(a[n - 1]);
+
+    return 0;
+}

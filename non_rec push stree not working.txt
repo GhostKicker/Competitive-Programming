@@ -1,0 +1,62 @@
+
+struct stree
+{
+    vi tr;
+    vi mod;
+    int n = 1;
+    int h = 0;
+
+    stree() {}
+    stree(vi& ar)
+    {
+        for (; n < ar.sz; n <<= 1) { ++h; }
+        tr.rr(n << 1, 0);
+        mod.rr(n << 1, 0);
+        for (int i = 0; i < ar.sz; ++i) tr[i + n] = ar[i];
+        for (int i = n - 1; i; --i) tr[i] = tr[i << 1] + tr[i << 1 | 1];
+    }
+    void build(int i) { for (i >>= 1; i; i >>= 1) tr[i] = min(tr[i << 1], tr[i << 1 | 1]); }
+    
+    void push(int v)
+    {
+        for (int bit = h; bit >= 0; --bit)
+        {
+            int i = v >> bit;
+            if (i < n)
+            {
+                mod[i << 1] += mod[i];
+                mod[i << 1 | 1] += mod[i];
+            }
+            tr[i] += mod[i];
+            mod[i] = 0;
+        }
+    }
+
+    void set(int l, int r, int x)
+    {
+        int l0 = l += n;
+        int r0 = r += n;
+        push(l0);
+        push(r0);
+        for (; l <= r; l >>= 1, r >>= 1)
+        {
+            if (l & 1) mod[l++] += x;
+            if (~r & 1) mod[r--] += x;
+        }
+        build(l0);
+        build(r0);
+    }
+
+    int get(int l, int r)
+    {
+        push(l += n);
+        push(r += n);
+        int res = -inf;
+        for (; l <= r; l >>= 1, r >>= 1)
+        {
+            if (l & 1)res = max(res, tr[l++]);
+            if (~r & 1) res = max(res, tr[r--]);
+        }
+        return res;
+    }
+};
