@@ -1,0 +1,86 @@
+namespace my_treap
+{
+    mt19937 rng;
+    inline bool check(int l, int r) { return rng() % (l + r) < l; }
+    struct Node;
+    typedef Node* treap;
+    void split(treap& tl, treap& tr, treap t, int key);
+    void merge(treap& t, treap tl, treap tr);
+
+    struct Node
+    {
+        Node *l, *r;
+        int val; 
+        int cnt = 1;
+        Node() {}
+        Node(int val) :val(val) { l = r = 0; }
+        int& operator[](int i) { return val; }
+    };
+
+    inline int cnt(treap t) { return t ? t->cnt : 0; }
+    inline void upd(treap& t) { if (t) t->cnt = cnt(t->l) + 1 + cnt(t->r); }
+    inline void push(treap& t) {}
+
+    void split(treap& tl, treap& tr, treap t, int key)
+    {
+        push(t);
+        if (!t) return void(tl = tr = nullptr);
+        if (cnt(t->l) < key)
+        {
+            split(t->r, tr, t->r, key - cnt(t->l) - 1);
+            upd(tl = t);
+        }
+        else
+        {
+            split(tl, t->l, t->l, key);
+            upd(tr = t);
+        }
+    }
+
+    void merge(treap& t, treap tl, treap tr)
+    {
+        push(tl); push(tr);
+        if (!tl || !tr) { t = tl ? tl : tr; }
+        else if (check(tl->cnt, tr->cnt))
+        {
+            merge(tl->r, tl->r, tr);
+            t = tl;
+        }
+        else
+        {
+            merge(tr->l, tl, tr->l);
+            t = tr;
+        }
+        upd(t);
+    }
+
+    int at(treap& t, int i)
+    {
+        treap t1, t2, t3;
+        split(t1, t2, t, i);
+        split(t2, t3, t2, 1);
+        int res = t2->val;
+        merge(t, t1, t2);
+        merge(t, t, t3);
+        return res;
+    }
+
+    void query(treap& t, int l, int r)
+    {
+        treap t1, t2, t3;
+        int len = r - l;
+        split(t1, t2, t, l);
+        split(t2, t3, t2, len);
+        merge(t, t2, t1);
+        merge(t, t, t3);
+    }
+
+    treap build(vi& ar)
+    {
+        treap t = nullptr;
+        for (auto& it : ar) merge(t, t, new Node(it));
+        return t;
+    }
+
+}
+using namespace my_treap;

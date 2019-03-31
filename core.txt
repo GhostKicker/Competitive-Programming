@@ -3,13 +3,13 @@
 //#pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,tune=native")
 #include <bits/stdc++.h>
 #define rr resize
+#define sz size()
 #define fs first
 #define sd second
-#define sz size()
 #define mp make_pair
 #define pb push_back
 #define all(x) begin(x), end(x)
-#define OUT(x) exit(((cout << (x)), 0))
+#define OUT(x) { cout << (x); exit(0); }
 //#define int ll
 using namespace std;
 typedef double db;
@@ -22,7 +22,6 @@ const db pi = acos(-1.0);
 const db dinf = 1e250;
 const ll INF = (ll)(2e18);
 const int inf = (int)(1e9 + 7);
-inline ll gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 
 
 int32_t main()
@@ -31,13 +30,10 @@ int32_t main()
     cout << fixed << setprecision(10);
     cin.tie(0);
 
-
 #ifdef _MY_DEFINE
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif
-
-
 
 
 

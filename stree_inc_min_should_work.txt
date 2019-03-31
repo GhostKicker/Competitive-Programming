@@ -1,0 +1,50 @@
+struct coolstree
+{
+    int n = 1;
+    vi t, m;
+    coolstree() {}
+    coolstree(int nn)
+    {
+        while (n < nn) n <<= 1;
+        t.rr(n << 1, 0);
+        m.rr(n << 1, 0);
+    }
+    void push(int i)
+    {
+        if (i >= (n << 1)) return;
+        t[i] += m[i];
+        if (i < n)
+        {
+            m[i << 1] += m[i];
+            m[i << 1 | 1] += m[i];
+        }
+        m[i] = 0;
+    }
+    void set(int v, int ql, int qr, int tl, int tr, int x)
+    {
+        push(v);
+        if (ql == tl && qr == tr) { m[v] += x; return; }
+        int mid = (tl + tr) / 2;
+        if (qr <= mid) set(v << 1, ql, qr, tl, mid, x);
+        else if (ql >= mid) set(v << 1 | 1, ql, qr, mid, tr, x);
+        else
+        {
+            set(v << 1, ql, mid, tl, mid, x);
+            set(v << 1 | 1, mid, qr, mid, tr, x);
+        }
+        push(v << 1);
+        push(v << 1 | 1);
+        if (v < n) t[v] = min(t[v << 1], t[v << 1 | 1]);
+    }
+    int get(int v, int ql, int qr, int tl, int tr)
+    {
+        push(v);
+        if (ql == tl && qr == tr) return t[v];
+        int mid = (tl + tr) / 2;
+        if (qr <= mid) return get(v << 1, ql, qr, tl, mid);
+        if (ql >= mid) return get(v << 1 | 1, ql, qr, mid, tr);
+        return min(get(v << 1, ql, mid, tl, mid), get(v << 1 | 1, mid, qr, mid, tr));
+    }
+    void set(int l, int r, int x) { set(1, l, r, 0, n, x); }
+    int get(int l, int r) { return get(1, l, r, 0, n); }
+};
