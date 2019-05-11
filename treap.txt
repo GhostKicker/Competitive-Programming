@@ -1,21 +1,17 @@
 namespace my_treap
 {
-    mt19937 rng;
+    mt19937 rng(0);
     inline bool check(int l, int r) { return rng() % (l + r) < l; }
-    struct Node;
-    typedef Node* treap;
-    void split(treap& tl, treap& tr, treap t, int key);
-    void merge(treap& t, treap tl, treap tr);
 
     struct Node
     {
         Node *l, *r;
-        int val; 
+        int val;
         int cnt = 1;
         Node() {}
         Node(int val) :val(val) { l = r = 0; }
-        int& operator[](int i) { return val; }
     };
+    typedef Node* treap;
 
     inline int cnt(treap t) { return t ? t->cnt : 0; }
     inline void upd(treap& t) { if (t) t->cnt = cnt(t->l) + 1 + cnt(t->r); }
@@ -41,7 +37,7 @@ namespace my_treap
     {
         push(tl); push(tr);
         if (!tl || !tr) { t = tl ? tl : tr; }
-        else if (check(tl->cnt, tr->cnt))
+        else if (check(cnt(tl), cnt(tr)))
         {
             merge(tl->r, tl->r, tr);
             t = tl;
@@ -65,21 +61,26 @@ namespace my_treap
         return res;
     }
 
-    void query(treap& t, int l, int r)
-    {
-        treap t1, t2, t3;
-        int len = r - l;
-        split(t1, t2, t, l);
-        split(t2, t3, t2, len);
-        merge(t, t2, t1);
-        merge(t, t, t3);
-    }
-
     treap build(vi& ar)
     {
         treap t = nullptr;
         for (auto& it : ar) merge(t, t, new Node(it));
         return t;
+    }
+
+    int ind = 0;
+    char c[100];
+    void print(treap& t, int side = 0, int prside = 0)
+    {
+        if (!t) return;
+        c[ind] = side^prside ? '|' : ' ';
+        ++ind;
+        print(t->l, 0, side);
+        c[ind] = side ? 'L' : 'Г';
+        for (int i = 2; i <= ind; ++i) cout << ' ' << c[i] << ' ';
+        cout << '[' << t->val << ']' << endl;
+        print(t->r, 1, side);
+        --ind;
     }
 
 }

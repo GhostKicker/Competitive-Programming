@@ -1,13 +1,12 @@
 struct dsu
 {
-    vi p;
-    vi s;
+    vi p, s;
     dsu() {}
     dsu(int n) 
     {
         p.rr(n);
         s.assign(n, 1);
-        for (int i = 0; i < p.sz; ++i) p[i] = i;
+        iota(all(p), 0);
     }
 
     int root(int v)
