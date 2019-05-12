@@ -1,9 +1,6 @@
 //#pragma comment(linker, "/stack:200000000")
 //#pragma GCC optimize("O3")
-//#pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,tune=native")
 #include <bits/stdc++.h>
-#define rr resize
-#define sz size()
 #define fs first
 #define sd second
 #define mp make_pair
@@ -12,7 +9,6 @@
 #define OUT(x) { cout << x; exit(0); }
 //#define int ll
 using namespace std;
-typedef double db;
 typedef long long ll;
 typedef vector<int> vi;
 typedef vector<vi> vvi;
