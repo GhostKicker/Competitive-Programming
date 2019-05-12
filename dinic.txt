@@ -1,31 +1,18 @@
 
 struct edge
 {
-    int from;
-    int to;
-    int cap;
-    int flow;
-    int index;
+    int from, to, cap, flow, index;
     edge() {};
     edge(int from, int to, int cap, int flow, int index)
-        :from(from)
-        , to(to)
-        , cap(cap)
-        , flow(flow)
-        , index(index)
+        :from(from), to(to), cap(cap), flow(flow), index(index)
     {};
 };
 
-
-
-int n;
-int m;
+int n, m;
 vector<edge> E;
-int s;
-int t;
+int s, t;
 vvi g;
-vector<int> used;
-vi d;
+vi used, d;
 
 bool bfs(int s)
 {
