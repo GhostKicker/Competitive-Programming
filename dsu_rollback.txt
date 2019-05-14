@@ -4,7 +4,7 @@ struct dsu
     dsu() {}
     dsu(int n)
     {
-        p.rr(n);
+        p.reisze(n);
         s.assign(n, 1);
         iota(all(p), 0);
     }

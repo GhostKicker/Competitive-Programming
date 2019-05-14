@@ -7,8 +7,8 @@ vi sufarray(string s)
     s += char(int(31));
     int n = s.sz;
 
-    p.rr(n);
-    c.rr(n);
+    p.resize(n);
+    c.resize(n);
 
     c[0] = 0;
     for (int i = 0; i < n; i++)

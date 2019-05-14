@@ -2,7 +2,6 @@
 //#pragma GCC optimize("O3")
 #include <bits/stdc++.h>
 #define sz size()
-#define rr resize
 #define fs first
 #define sd second
 #define mp make_pair

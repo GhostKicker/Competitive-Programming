@@ -8,8 +8,8 @@ struct coolstree
     coolstree(vi& ar)
     {
         for (; n < ar.sz; n <<= 1) {}
-        t.rr(n<<1, 0);
-        mod.rr(n<<1, 0);
+        t.resize(n<<1, 0);
+        mod.resize(n<<1, 0);
         for (int i = 0; i < ar.size(); i++) t[i + n] = ar[i];
         for (int i = n - 1; i > 0; --i) t[i] = min(t[2 * i], t[2 * i + 1]);
     }

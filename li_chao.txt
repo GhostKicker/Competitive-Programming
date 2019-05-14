@@ -2,7 +2,6 @@
 //#pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,tune=native")
 #pragma GCC optimize("Ofast")
 #include <bits/stdc++.h>
-#define rr resize
 #define fs first
 #define sd second
 #define sz size()
@@ -42,7 +41,7 @@ struct li_chao
 {
     vector<line> tr;
     int n = 1;
-    li_chao() { tr.rr(4 * maxn); }
+    li_chao() { tr.resize(4 * maxn); }
     void insert(line nl, int v = 1, int l = 0, int r = maxn)
     {
         int m = (l + r) >> 1;

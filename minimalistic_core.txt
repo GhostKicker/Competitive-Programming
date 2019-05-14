@@ -3,14 +3,12 @@
 #define fs first
 #define sd second
 #define sz size()
-#define rr resize
 #define pb push_back
 using namespace std;
 typedef long long ll;
 typedef vector<int> vi;
 template <class T> void OUT(T res) { cout << res; exit(0); }
 const ll inf = 1000*1000*1000 + 7;
-const ll mod = 998244353;
 
 int32_t main()
 {

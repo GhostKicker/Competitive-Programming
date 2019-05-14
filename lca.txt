@@ -20,8 +20,8 @@ struct LCA
     }
     void init(vvi& g)
     {
-        dep.rr(g.sz, -1);
-        p.rr(g.sz, vi(20, -1));
+        dep.resize(g.sz, -1);
+        p.resize(g.sz, vi(20, -1));
         dfs(0, 0, 0, g);
     }
 
