@@ -69,7 +69,7 @@ namespace my_treap
     }
 
     int ind = 0;
-    char c[100];
+    char c[1000];
     void print(treap& t, int side = 0, int prside = 0)
     {
         if (!t) return;

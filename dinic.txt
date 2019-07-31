@@ -1,87 +1,89 @@
-
-struct edge
+namespace dinic
 {
-    int from, to, cap, flow, index;
-    edge() {};
-    edge(int from, int to, int cap, int flow, int index)
-        :from(from), to(to), cap(cap), flow(flow), index(index)
-    {};
-};
-
-int n, m;
-vector<edge> E;
-int s, t;
-vvi g;
-vi used, d;
-
-bool bfs(int s)
-{
-    d.assign(g.sz, inf);
-    d[s] = 0;
-    queue<int> q;
-    q.push(s);
-
-    while (!q.empty())
+    struct edge
     {
-        int curv = q.front();
-        q.pop();
+        int from, to, cap, flow, index;
+        edge() {};
+        edge(int from, int to, int cap, int flow, int index)
+            :from(from), to(to), cap(cap), flow(flow), index(index)
+        {};
+    };
 
-        for (auto e : g[curv])
+    vector<edge> E;
+    int s, t;
+    vvi g;
+    vi used, d;
+
+    bool bfs(int s)
+    {
+        d.assign(g.sz, inf);
+        d[s] = 0;
+        queue<int> q;
+        q.push(s);
+
+        while (!q.empty())
         {
-            if (d[E[e].to] == inf && E[e].cap != E[e].flow)
+            int curv = q.front();
+            q.pop();
+
+            for (auto e : g[curv])
             {
-                q.push(E[e].to);
-                d[E[e].to] = d[curv] + 1;
+                if (d[E[e].to] == inf && E[e].cap != E[e].flow)
+                {
+                    q.push(E[e].to);
+                    d[E[e].to] = d[curv] + 1;
+                }
             }
         }
+        if (d[t] == inf) return false;
+        return true;
     }
-    if (d[t] == inf) return false;
-    return true;
-}
 
-int dfs(int v, int flow)
-{
-    if (v == t) return flow;
-    for (; used[v] < g[v].size(); ++used[v])
+    int dfs(int v, int flow)
     {
-        int e = g[v][used[v]];
-
-        if (d[v] == d[E[e].to] - 1 && E[e].flow < E[e].cap)
+        if (v == t) return flow;
+        for (; used[v] < g[v].size(); ++used[v])
         {
-            int fnew = dfs(E[e].to, min(flow, E[e].cap - E[e].flow));
-            if (fnew != 0)
+            int e = g[v][used[v]];
+
+            if (d[v] == d[E[e].to] - 1 && E[e].flow < E[e].cap)
             {
-                E[e].flow += fnew;
-                E[e ^ 1].flow -= fnew;
-                return fnew;
+                int fnew = dfs(E[e].to, min(flow, E[e].cap - E[e].flow));
+                if (fnew != 0)
+                {
+                    E[e].flow += fnew;
+                    E[e ^ 1].flow -= fnew;
+                    return fnew;
+                }
             }
         }
+        return 0;
     }
-    return 0;
-}
 
-int Dinic()
-{
-    int res = 0;
-    while (1)
+    int Dinic()
     {
-        if (!bfs(s)) return res;
-
+        int res = 0;
         while (1)
         {
-            used.assign(g.sz, 0);
-            int f = dfs(s, inf);
-            res += f;
-            if (!f) break;
+            if (!bfs(s)) return res;
+
+            while (1)
+            {
+                used.assign(g.sz, 0);
+                int f = dfs(s, inf);
+                res += f;
+                if (!f) break;
+            }
         }
     }
-}
 
 
-void add_edge(int from, int to, int cap)
-{
-    g[from].pb(E.sz);
-    E.pb(edge(from, to, cap, 0, E.sz));
-    g[to].pb(E.sz);
-    E.pb(edge(to, from, 0, 0, E.sz));
+    void add_edge(int from, int to, int cap)
+    {
+        g[from].pb(E.sz);
+        E.pb(edge(from, to, cap, 0, E.sz));
+        g[to].pb(E.sz);
+        E.pb(edge(to, from, 0, 0, E.sz));
+    }
 }
+using namespace dinic;
