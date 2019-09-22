@@ -1,0 +1,141 @@
+//#pragma comment(linker, "/stack:200000000")
+//#pragma GCC optimize("O3")
+#include <bits/stdc++.h>
+//#define int ll
+#define fs first
+#define sd second
+#define mp make_pair
+#define pb push_back
+#define sz(x) int((x).size())
+#define all(x) begin(x), end(x)
+#define OUT(x) { cout << x; exit(0); }
+//#define resize do_not_use_resize
+using namespace std;
+typedef double db;
+typedef long long ll;
+typedef vector<int> vi;
+typedef pair<int, int> pii;
+const db eps = 1e-9;
+const db pi = acos(-1.0);
+const db dinf = 1e250;
+const ll INF = (ll)(2e18);
+const int inf = (int)(1e9 + 7);
+//------------------------------------------//
+
+#ifdef _MY
+const int maxn = 8;
+#endif
+#ifndef _MY
+const int maxn = 1000 * 1000 + 5;
+#endif
+struct node
+{
+	int val = inf;
+	node* l = 0, *r = 0;
+};
+struct stree
+{
+	vector<node*> t;
+	stree() { t.pb(new node()); }
+	node*& safe_ptr(node*& ptr) { return ptr ? ptr : ptr = new node(); }
+	int safe_get(node* ptr) { return ptr ? ptr->val : inf; }
+	void build(vi& ar, node*& v, int tl = 0, int tr = maxn)
+	{
+		if (tl + 1 == tr) return void(v->val = ar[tl]);
+		int mid = (tl + tr) / 2;
+		if (tl < sz(ar)) build(ar, safe_ptr(v->l), tl, mid);
+		if (mid < sz(ar)) build(ar, safe_ptr(v->r), mid, tr);
+		v->val = min(safe_get(v->l), safe_get(v->r));
+	}
+	node* set(int i, int x, node* v, int tl = 0, int tr = maxn)
+	{
+		node* curv = new node(*v);
+		if (i == tl && i + 1 == tr) { curv->val = x; return curv; }
+		int mid = (tl + tr) / 2;
+		if (i < mid) curv->l = set(i, x, safe_ptr(v->l), tl, mid);
+		else curv->r = set(i, x, safe_ptr(v->r), mid, tr);
+		curv->val = min(safe_get(curv->l), safe_get(curv->r));
+		return curv;
+	}
+	int get(int l, int r, node* v, int tl = 0, int tr = maxn)
+	{
+		if (tl == l && tr == r) return v->val;
+		int mid = (tl + tr) / 2;
+		int res = inf;
+		if (l < mid) res = min(res, get(l, min(r, mid), safe_ptr(v->l), tl, mid));
+		if (r > mid) res = min(res, get(max(l, mid), r, safe_ptr(v->r), mid, tr));
+		return res;
+	}
+};
+
+int ind = 0;
+char c[1000];
+void print(node* t, int side = 0, int prside = 0)
+{
+#ifdef _MY
+	if (!t) return;
+	c[ind] = side ^ prside ? '|' : ' ';
+	++ind;
+	print(t->l, 0, side);
+	c[ind] = side ? '\\' : '/';
+	for (int i = 2; i <= ind; ++i) cout << ' ' << c[i] << ' ';
+	cout << '[' << t->val << ']' << endl;
+	print(t->r, 1, side);
+	--ind;
+#endif
+}
+
+int32_t main()
+{
+	ios_base::sync_with_stdio(0);
+	cout << fixed << setprecision(10);
+	cin.tie(0);
+
+#ifdef _MY
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+#endif
+
+	int n, m;
+	cin >> n >> m;
+	vi in(n);
+	stree t;
+	for (auto& it : in) cin >> it;
+	t.build(in, t.t[0]);
+	
+	print(t.t[0]);
+	int oldres = 0;
+	for (int i = 0; i < m; ++i)
+	{
+		char com;
+		cin >> com;
+
+		if (com == 'm')
+		{
+			int v, l, r;
+			cin >> v >> l >> r;
+			v ^= oldres;
+			l ^= oldres;
+			r ^= oldres;
+			--l; r;
+			cout << (oldres = t.get(l, r, t.t[v])) << endl;
+		}
+		else
+		{
+			int v, i, x;
+			cin >> v >> i >> x;
+			x ^= oldres;
+			v ^= oldres;
+			i ^= oldres;
+			--i;
+			t.t.pb(t.set(i, x, t.t[v]));
+			print(t.t.back());
+		}
+	}
+
+	for (int i = 0; i < sz(t.t); ++i) print(t.t[i]);
+
+
+
+	return 0;
+}

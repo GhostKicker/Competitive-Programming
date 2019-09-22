@@ -11,7 +11,7 @@ namespace dinic
 
     vector<edge> E;
     int s, t;
-    vvi g;
+    vector<vi> g;
     vi used, d;
 
     bool bfs(int s)

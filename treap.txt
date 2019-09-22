@@ -70,18 +70,20 @@ namespace my_treap
 
     int ind = 0;
     char c[1000];
-    void print(treap& t, int side = 0, int prside = 0)
-    {
-        if (!t) return;
-        c[ind] = side^prside ? '|' : ' ';
-        ++ind;
-        print(t->l, 0, side);
-        c[ind] = side ? 'L' : 'Г';
-        for (int i = 2; i <= ind; ++i) cout << ' ' << c[i] << ' ';
-        cout << '[' << t->val << ']' << endl;
-        print(t->r, 1, side);
-        --ind;
-    }
+    void print(node* t, int side = 0, int prside = 0)
+	{
+#ifdef _MY
+		if (!t) return;
+		c[ind] = side ^ prside ? '|' : ' ';
+		++ind;
+		print(t->l, 0, side);
+		c[ind] = side ? '\\' : '/';
+		for (int i = 2; i <= ind; ++i) cout << ' ' << c[i] << ' ';
+		cout << '[' << t->val << ']' << endl;
+		print(t->r, 1, side);
+		--ind;
+#endif
+	}
 
 }
 using namespace my_treap;

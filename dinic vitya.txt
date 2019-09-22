@@ -62,8 +62,8 @@ int Dinic()
 
 void add_edge(int f, int to, int cap)
 {
-    g[f].pb(int(E.sz));
+    g[f].pb(int(E.size()));
     E.pb(edge(to, cap));
-    g[to].pb(int(E.sz));
+    g[to].pb(int(E.size()));
     E.pb(edge(f, 0));
 }

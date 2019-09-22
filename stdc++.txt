@@ -61,7 +61,12 @@
 #endif
 
 // C++
+template <class T>
+T __gcd(T a, T b) { return b? __gcd(b, a%b) : a; }
 #include <algorithm>
+#include <unordered_map>
+#include <unordered_set>
+#include <random>
 #include <bitset>
 #include <complex>
 #include <deque>

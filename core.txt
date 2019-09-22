@@ -2,14 +2,11 @@
 //#pragma GCC optimize("O3")
 #include <bits/stdc++.h>
 //#define int ll
-#define fs first
-#define sd second
-#define mp make_pair
+#define xx first
+#define yy second
 #define pb push_back
-#define sz(x) int((x).size())
 #define all(x) begin(x), end(x)
-#define OUT(x) { cout << x; exit(0); }
-#define resize do_not_use_resize
+#define OUT(x) ((cout << x), exit(0))
 using namespace std;
 typedef double db;
 typedef long long ll;
@@ -22,8 +19,6 @@ const ll INF = (ll)(2e18);
 const int inf = (int)(1e9 + 7);
 //------------------------------------------//
 
-
-
 int32_t main()
 {
     ios_base::sync_with_stdio(0);
@@ -34,8 +29,6 @@ int32_t main()
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif
-
-
 
 
 
