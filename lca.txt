@@ -1,8 +1,9 @@
 struct LCA
 {
+    int root = 0;
     vi dep;
-    vvi p;
-    void dfs(int v, int par, int curd, vvi& g)
+    vector<vi> p;
+    void dfs(int v, int par, int curd, vector<vi>& g)
     {
         dep[v] = curd;
         p[v][0] = par;
@@ -18,11 +19,11 @@ struct LCA
             dfs(it, v, curd + 1, g);
         }
     }
-    void init(vvi& g)
+    void init(vector<vi>& g)
     {
-        dep.resize(g.sz, -1);
-        p.resize(g.sz, vi(20, -1));
-        dfs(0, 0, 0, g);
+        dep.resize(g.size(), -1);
+        p.resize(g.size(), vi(20, -1));
+        dfs(root, root, 0, g);
     }
 
     int parent(int v, int h)
@@ -52,5 +53,5 @@ struct LCA
         return p[a][0];
     }
     LCA() {}
-    LCA(vvi& g) { init(g); }
+    LCA(vector<vi>& g, int rt = 0):root(rt) { init(g); }
 };

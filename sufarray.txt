@@ -1,11 +1,10 @@
-
 vi sufarray(string s)
 {
     vi p;
     vi c;
 
     s += char(int(31));
-    int n = s.sz;
+    int n = s.size();
 
     p.resize(n);
     c.resize(n);
@@ -30,20 +29,20 @@ vi sufarray(string s)
     for (int i = 2; i < n; i <<= 1)
     {
         vi cswap(n, inf);
-        vpii next;
+        vector<pii> next;
         for (int j = 0; j < n; j++)
-            next.pb(mp(p[j], (p[j] + (i >> 1)) % n));
+            next.pb({ p[j], (p[j] + (i >> 1)) % n });
 
         sort(all(next),
             [&c](pii a, pii b)
-        {
-            if (c[a.fs] != c[b.fs]) return c[a.fs] < c[b.fs];
-            return c[a.sd] < c[b.sd];
-        });
+            {
+                if (c[a.first] != c[b.first]) return c[a.first] < c[b.first];
+                return c[a.second] < c[b.second];
+            });
 
-        for (int j = 0; j < next.sz; j++)
+        for (int j = 0; j < next.size(); j++)
         {
-            p[j] = next[j].fs;
+            p[j] = next[j].first;
         }
 
         int curclass = 0;
@@ -52,7 +51,7 @@ vi sufarray(string s)
         {
             pii& a = next[j];
             pii& b = next[j - 1];
-            if (c[a.fs] != c[b.fs] || c[a.sd] != c[b.sd]) ++curclass;
+            if (c[a.first] != c[b.first] || c[a.second] != c[b.second]) ++curclass;
             cswap[p[j]] = curclass;
         }
 

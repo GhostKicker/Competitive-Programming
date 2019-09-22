@@ -1,159 +1,91 @@
-//#pragma comment(linker, "/stack:200000000")
-//#pragma GCC optimize("O3")
-#include <bits/stdc++.h>
-#define int ll
-#define fs first
-#define sd second
-#define mp make_pair
-#define pb push_back
-#define sz(x) int((x).size())
-#define all(x) begin(x), end(x)
-#define OUT(x) { cout << x; exit(0); }
-//#define resize do_not_use_resize
-using namespace std;
-typedef double db;
-typedef long long ll;
-typedef vector<int> vi;
-typedef pair<int, int> pii;
-const db eps = 1e-9;
-const db pi = acos(-1.0);
-const db dinf = 1e250;
-const ll INF = (ll)(2e18);
-const int inf = (int)(1e9 + 7);
-//------------------------------------------//
-
 int s, t;
 struct edge
 {
-	int to, f = 0, cap, cost;
-	edge() {}
-	edge(int to, int cap, int cost) :to(to), cap(cap), cost(cost) {}
+    int to, f = 0, cap, cost;
+    edge() {}
+    edge(int to, int cap, int cost) :to(to), cap(cap), cost(cost) {}
 };
-
+ 
 vector<vi> g;
 vector<edge> E;
 vi d, inq, p, pe;
 void augument()
 {
-	queue<int> q;
-	d.assign(t + 1, inf);
-	inq.assign(t + 1, 0);
-	p.assign(t + 1, -1);
-	pe.assign(t + 1, -1);
-	d[s] = 0;
-	q.push(s);
-	while (q.size())
-	{
-		int k = q.front();
-		q.pop();
-		inq[k] = 0;
-		for (auto& e : g[k])
-		{
-			if (E[e].cap - E[e].f > 0)
-			{
-				int w = E[e].cost;
-				int to = E[e].to;
-				if (d[to] > d[k] + w)
-				{
-					p[to] = k;
-					pe[to] = e;
-					d[to] = d[k] + w;
-					if (!inq[to])
-					{
-						q.push(to);
-						inq[to] = 1;
-					}
-				}
-			}
-		}
-	}
-
-
+    queue<int> q;
+    d.assign(t + 1, inf);
+    inq.assign(t + 1, 0);
+    p.assign(t + 1, -1);
+    pe.assign(t + 1, -1);
+    d[s] = 0;
+    q.push(s);
+    while (q.size())
+    {
+        int k = q.front();
+        q.pop();
+        inq[k] = 0;
+        for (auto& e : g[k])
+        {
+            if (E[e].cap - E[e].f > 0)
+            {
+                int w = E[e].cost;
+                int to = E[e].to;
+                if (d[to] > d[k] + w)
+                {
+                    p[to] = k;
+                    pe[to] = e;
+                    d[to] = d[k] + w;
+                    if (!inq[to])
+                    {
+                        q.push(to);
+                        inq[to] = 1;
+                    }
+                }
+            }
+        }
+    }
+ 
+ 
 }
-
-void dfs(int v)
-{
-	if (v == t)
-	{
-		cout << v + 1 << endl;
-		return;
-	}
-	for (auto& e : g[v])
-	{
-		if (E[e].cap != 1 || E[e].f != 1) continue;
-		cout << v + 1 << " ";
-		E[e].f = 0;
-		return dfs(E[e].to);
-	}
-}
-
+ 
 int check()
 {
-	if (p[t] == -1)  OUT("No solution");
-	int mx = inf;
-	int cur = t;
-	while (cur != s)
-	{
-		mx = min(mx, E[pe[cur]].cap - E[pe[cur]].f);
-		cur = p[cur];
-	}
-	cur = t;
-	while (cur != s)
-	{
-		E[pe[cur]].f += mx;
-		E[pe[cur]^1].f -= mx;
-		cur = p[cur];
-	}
-	return mx * d[t];
+    if (p[t] == -1) return -1;
+    int mx = inf;
+    int cur = t;
+    while (cur != s)
+    {
+        mx = min(mx, E[pe[cur]].cap - E[pe[cur]].f);
+        cur = p[cur];
+    }
+    cur = t;
+    while (cur != s)
+    {
+        E[pe[cur]].f += mx;
+        E[pe[cur] ^ 1].f -= mx;
+        cur = p[cur];
+    }
+    return mx * d[t];
 }
-
-void mincost_maxflow()
+ 
+int mincost_maxflow()
 {
-	
-	augument();
-	int res = check();
-	augument();
-	if (check() != res) OUT("No solution");
+    int res = 0;
+    while (true)
+    {
+        augument();
+        int cur = check();
+        if (cur == -1) break;
+        res += cur;
+    }
+    return res;
 }
-
-
+ 
+ 
 void add_edge(int f, int to, int cap, int cost)
 {
-	g[f].pb(int(E.size()));
-	E.pb(edge(to, cap, cost));
-	g[to].pb(int(E.size()));
-	E.pb(edge(f, 0, -cost));
+    g[f].pb(int(E.size()));
+    E.pb(edge(to, cap, cost));
+    g[to].pb(int(E.size()));
+    E.pb(edge(f, 0, -cost));
 }
-
-
-int32_t main()
-{
-	ios_base::sync_with_stdio(0);
-	cout << fixed << setprecision(10);
-	cin.tie(0);
-
-#ifdef _MY
-	freopen("input.txt", "r", stdin);
-	freopen("output.txt", "w", stdout);
-#endif
-
-	int n, m;
-	cin >> n >> m;
-	s = 0;
-	t = n - 1;
-	g.resize(t + 1);
-	for (int i = 0; i < m; ++i)
-	{
-		int from, to, cost;
-		cin >> from >> to >> cost;
-		--from; --to;
-		add_edge(from, to, 1, cost);
-		add_edge(to, from, 1, cost);
-	}
-
-	mincost_maxflow();
-	dfs(s);
-	dfs(s);
-
-	return 0;
-}
+ 
