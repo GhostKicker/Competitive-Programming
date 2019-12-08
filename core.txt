@@ -1,7 +1,8 @@
 #include <bits/stdc++.h>
 //#define int ll
-#define all(x) begin(x), end(x)
+#define all(x) (x).begin(), (x).end()
 #define OUT(x) ((cout << x), exit(0))
+#define out(x) return void(cout << x << endl)
 using namespace std;
 typedef long double db;
 typedef long long ll;
@@ -9,23 +10,20 @@ typedef vector<int> vi;
 typedef pair<int,int> pii;
 const db eps = 1e-9;
 const db pi = acos(-1.0);
-const db dinf = 1e250;
 const ll INF = (ll)(2e18);
 const int inf = (int)(1e9 + 7);
 //------------------------------------------//
 
 int32_t main()
 {
-    ios_base::sync_with_stdio(0);
+    ios_base::sync_with_stdio(false);
     cout << fixed << setprecision(10);
-    cin.tie(0);
+    cin.tie(nullptr);
 
 #ifdef _MY
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif
-
-
 
 
     return 0;

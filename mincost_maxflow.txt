@@ -83,9 +83,9 @@ int mincost_maxflow()
  
 void add_edge(int f, int to, int cap, int cost)
 {
-    g[f].pb(int(E.size()));
-    E.pb(edge(to, cap, cost));
-    g[to].pb(int(E.size()));
-    E.pb(edge(f, 0, -cost));
+    g[f].push_back(int(E.size()));
+    E.push_back(edge(to, cap, cost));
+    g[to].push_back(int(E.size()));
+    E.push_back(edge(f, 0, -cost));
 }
  

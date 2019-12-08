@@ -1,0 +1,46 @@
+ll binpow(ll a, ll p, ll mod)
+{
+    ll res = 1;
+    for (; p; p /= 2)
+    {
+        if (p & 1) res = res * a % mod;
+        a = a * a % mod;
+    }
+    return res;
+}
+struct hashes
+{
+    const ll mod = inf;
+    const ll s = 263;
+    const ll sinv = binpow(s, mod - 2, mod);
+    vector<ll> pows;
+    vector<ll> powsinv;
+    vector<ll> hash;
+    hashes() {}
+    hashes(string str)
+    {
+        pows.resize(str.size());
+        powsinv.resize(str.size());
+        hash.resize(str.size());
+        pows[0] = 1;
+        powsinv[0] = 1;
+        hash[0] = str[0] - 'a' + 1;
+        for (int i = 1; i < str.size(); ++i)
+        {
+            pows[i] = pows[i - 1] * s % mod;
+            powsinv[i] = powsinv[i - 1] * sinv % mod;
+            hash[i] = (hash[i - 1] + (str[i] - 'a' + 1) * pows[i]) % mod;
+        }
+    }
+
+    ptrdiff_t size() { return hash.size(); }
+    
+    ll get(int l, int r)
+    {
+        if (l > r) return 0;
+        ll res = hash[r];
+        if (l != 0) res = (res + mod - hash[l - 1]) % mod;
+        res = res * powsinv[l] % mod;
+        return res;
+    }
+};

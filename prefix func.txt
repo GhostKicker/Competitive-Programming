@@ -1,6 +1,6 @@
 vi p_func(string s)
 {
-    int n = s.sz;
+    int n = s.size();
     vi p(n, 0);
 
     for (int i = 1; i < n; i++)

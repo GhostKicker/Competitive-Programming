@@ -1,16 +1,16 @@
 vi z_func(string s)
 {
-    vi z(s.sz, 0);
+    vi z(s.size(), 0);
 
     int l = 0;
     int r = 0;
 
-    for (int i = 1; i < s.sz; i++)
+    for (int i = 1; i < s.size(); i++)
     {
         int count = 0;
         if (i <= r)  count = min(z[i - l], r - i + 1);
 
-        for (int j = count; i + j < s.sz && s[j] == s[i + j]; j++)
+        for (int j = count; i + j < s.size() && s[j] == s[i + j]; j++)
             count++;
 
         z[i] = count;
