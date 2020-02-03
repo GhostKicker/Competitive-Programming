@@ -70,7 +70,7 @@ namespace my_treap
 
     int ind = 0;
     char c[1000];
-    void print(node* t, int side = 0, int prside = 0)
+    void print(Node* t, int side = 0, int prside = 0)
 	{
 #ifdef _MY
 		if (!t) return;

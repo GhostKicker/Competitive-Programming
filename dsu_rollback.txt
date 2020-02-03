@@ -4,7 +4,7 @@ struct dsu
     dsu() {}
     dsu(int n)
     {
-        p.reisze(n);
+        p.resize(n);
         s.assign(n, 1);
         iota(all(p), 0);
     }
@@ -13,16 +13,17 @@ struct dsu
     {
         a = root(a);
         b = root(b);
-        if (a == b) { B.pb(-1); return; }
+        if (a == b) { B.push_back(-1); return; }
         if (s[a] < s[b]) swap(a, b);
         s[a] += s[b];
         p[b] = a;
-        B.pb(b);
+        B.push_back(b);
     }
     void rollback()
     {
         int b = B.back();
         B.pop_back();
+		if (b == -1) return;
         s[p[b]] -= s[b];
         p[b] = b;
     }

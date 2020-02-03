@@ -7,7 +7,7 @@ struct minqueue
     T& get() { return d.front(); }
     void push(T a)
     {
-        while (sz(d) && d.back() > a)
+        while (d.size() && d.back() > a)
         {
             d.pop_back();
             di.pop_back();
@@ -17,11 +17,12 @@ struct minqueue
     }
     void pop()
     {
-        if (sz(d) && di.front() == e)
+        if (d.size() && di.front() == e)
         {
             d.pop_front();
             di.pop_front();
         }
         ++e;
     }
+	int size(){ return b - e; }
 };
