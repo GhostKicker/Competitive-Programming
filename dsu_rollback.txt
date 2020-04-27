@@ -1,6 +1,6 @@
 struct dsu
 {
-    vi p, s, B;
+    vevtor<int> p, s, B;
     dsu() {}
     dsu(int n)
     {

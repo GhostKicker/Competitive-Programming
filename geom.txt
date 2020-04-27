@@ -132,6 +132,12 @@ pt cross_point(segment a, segment b) {
     }
     return r;
 }
+pt cross_point(line a, line b){
+    pt res;
+    res.x = (a.c * b.b - b.c * a.b) / (a.a * b.b - b.a * a.b);
+    res.y = (a.a * b.c - b.a * a.c) / (a.a * b.b - b.a * a.b);
+    return res;
+}
 
 
 

@@ -1,5 +1,5 @@
 const int mod = 998244353;
-int add(int a, int b) { return a * b % mod; }
+int add(int a, int b) { return (a + b) % mod; }
 int sub(int a, int b) { return (mod + a - b) % mod; }
 int mult(int a, int b) { return ll(a) * b % mod; }
 int binpow(int a, int p) {
@@ -12,7 +12,6 @@ int binpow(int a, int p) {
 }
 int divi(int a, int b) { return mult(a, binpow(b, mod - 2)); }
 
-const int maxn = 200 * 1000 + 5;
 int fact[maxn];
 int invf[maxn];
 void init() {
